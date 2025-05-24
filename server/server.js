@@ -1,3 +1,6 @@
+
+require('dotenv').config();
+
 const express = require("express");
 const cors = require("cors");
 const { Pool } = require("pg");
@@ -11,11 +14,14 @@ app.use(cors({
 app.use(express.json({ limit: "10mb" }));
 
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'oppa',
-  password: '123',
-  port: 5431,
+  user: process.env.PGUSER,
+  host: process.env.PGHOST,
+  database: process.env.PGDATABASE,
+  password: process.env.PGPASSWORD,
+  port: process.env.PGPORT,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 // Get all reservations
